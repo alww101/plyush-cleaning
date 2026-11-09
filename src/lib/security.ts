@@ -1,0 +1,12 @@
+import {randomBytes,createHash,scryptSync,timingSafeEqual} from 'node:crypto';
+import {cookies} from 'next/headers';
+import {db,type Queryable} from './db';
+export class HttpError extends Error{constructor(public status:number,message:string,public fields?:Record<string,string>){super(message);}}
+export const token=()=>randomBytes(32).toString('hex');
+export const hash=(v:string)=>createHash('sha256').update(v).digest('hex');
+export function passwordHash(password:string){const salt=randomBytes(16).toString('hex');return salt+':'+scryptSync(password,salt,64).toString('hex');}
+export function verifyPassword(password:string,value:string){const [salt,key]=value.split(':');if(!salt||!key)return false;const a=Buffer.from(key,'hex');const b=scryptSync(password,salt,64);return a.length===b.length&&timingSafeEqual(a,b);}
+export function originCheck(req:Request){const expected=process.env.APP_ORIGIN|| (process.env.NODE_ENV!=='production'?new URL(req.url).origin:'');if(!expected||req.headers.get('origin')!==expected)throw new HttpError(403,'Запрос с другого сайта запрещён');}
+export async function admin(q?:Queryable){const c=(await cookies()).get('plyush_session')?.value;if(!c)throw new HttpError(401,'Войдите в кабинет');const r=await(q??await db()).query('SELECT token_hash FROM sessions WHERE token_hash=$1 AND expires_at>now()',[hash(c)]);if(!r.rows.length)throw new HttpError(401,'Сеанс завершён. Войдите снова');}
+export async function rate(req:Request,scope:string,limit=30){const ip=process.env.TRUST_PROXY==='1'?(req.headers.get('x-forwarded-for')?.split(',')[0]?.trim()||'unknown'):'local';const d=await db();const r=await d.query<{count:number}>(`INSERT INTO rate_limits(key,count,reset_at) VALUES($1,1,now()+interval '15 minutes') ON CONFLICT(key) DO UPDATE SET count=CASE WHEN rate_limits.reset_at<now() THEN 1 ELSE rate_limits.count+1 END, reset_at=CASE WHEN rate_limits.reset_at<now() THEN now()+interval '15 minutes' ELSE rate_limits.reset_at END RETURNING count`,[scope+':'+hash(ip)]);if(r.rows[0].count>limit)throw new HttpError(429,'Слишком много попыток. Попробуйте через 15 минут');}
+export async function jsonBody(req:Request){if(Number(req.headers.get('content-length')||0)>60000)throw new HttpError(413,'Слишком большой запрос');const text=await req.text();if(text.length>60000)throw new HttpError(413,'Слишком большой запрос');try{return JSON.parse(text);}catch{throw new HttpError(400,'Некорректные данные');}}

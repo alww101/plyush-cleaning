@@ -1,0 +1,14 @@
+import {chromium} from '@playwright/test';
+import fs from 'node:fs/promises';
+await fs.mkdir('../../work/qa',{recursive:true});
+const browser=await chromium.launch({channel:'chrome',headless:true,args:['--enable-webgl','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+const page=await browser.newPage({viewport:{width:1440,height:1080},deviceScaleFactor:1});
+const errors=[];page.on('pageerror',e=>errors.push(e.message));
+await page.goto('http://localhost:3000',{waitUntil:'domcontentloaded',timeout:60000});
+await page.waitForTimeout(6000);
+await page.screenshot({path:'../../work/qa/desktop.png',fullPage:true});
+console.log(JSON.stringify({title:await page.title(),canvas:await page.locator('canvas').count(),errors,overflow:await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth)}));
+await page.setViewportSize({width:390,height:844});
+await page.screenshot({path:'../../work/qa/mobile.png',fullPage:true});
+console.log(JSON.stringify({mobileOverflow:await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth)}));
+await browser.close();

@@ -1,0 +1,13 @@
+Original Plyush furniture assets
+
+The original sofa, armchair, mattress, chair and ottoman/other models, their
+Blender sources, generated GLB files, rendered posters and build_models.py
+are dedicated to the public domain under CC0 1.0 Universal, to the extent
+permitted by applicable law. You may use, copy, modify and redistribute them
+for any purpose, including commercial use and distribution with source code.
+
+https://creativecommons.org/publicdomain/zero/1.0/
+
+No warranty is provided. This dedication does not cover third-party packages,
+Blender itself, or the separately included Kenney archive; the latter has its
+own CC0 notice in Kenney-License.txt.

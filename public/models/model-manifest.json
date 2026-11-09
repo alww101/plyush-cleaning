@@ -1,0 +1,170 @@
+{
+  "sofa": {
+    "bytes": 178496,
+    "meshes": 19,
+    "triangles": 6652,
+    "vertices": 4317,
+    "materials": 5,
+    "allMeshesHaveUV": true,
+    "faceAnchor": [
+      0,
+      0.43,
+      0.675
+    ],
+    "posterWebpBytes": 54214
+  },
+  "sofa_three": {
+    "bytes": 222424,
+    "meshes": 24,
+    "triangles": 8532,
+    "vertices": 5478,
+    "materials": 5,
+    "allMeshesHaveUV": true,
+    "faceAnchor": [
+      0,
+      0.43,
+      0.675
+    ],
+    "posterWebpBytes": 53170
+  },
+  "sofa_corner": {
+    "bytes": 216076,
+    "meshes": 22,
+    "triangles": 8420,
+    "vertices": 5438,
+    "materials": 5,
+    "allMeshesHaveUV": true,
+    "faceAnchor": [
+      0,
+      0.43,
+      0.675
+    ],
+    "posterWebpBytes": 54508
+  },
+  "armchair": {
+    "bytes": 125040,
+    "meshes": 13,
+    "triangles": 4344,
+    "vertices": 2893,
+    "materials": 4,
+    "allMeshesHaveUV": true,
+    "faceAnchor": [
+      0,
+      0.43,
+      0.66
+    ],
+    "posterWebpBytes": 56798
+  },
+  "recliner": {
+    "bytes": 153128,
+    "meshes": 16,
+    "triangles": 5260,
+    "vertices": 3515,
+    "materials": 4,
+    "allMeshesHaveUV": true,
+    "faceAnchor": [
+      0,
+      0.43,
+      0.66
+    ],
+    "posterWebpBytes": 65338
+  },
+  "mattress": {
+    "bytes": 243204,
+    "meshes": 38,
+    "triangles": 9544,
+    "vertices": 6166,
+    "materials": 3,
+    "allMeshesHaveUV": true,
+    "faceAnchor": [
+      0,
+      0.3,
+      1.257
+    ],
+    "posterWebpBytes": 56546
+  },
+  "mattress_single": {
+    "bytes": 252072,
+    "meshes": 38,
+    "triangles": 9544,
+    "vertices": 6166,
+    "materials": 3,
+    "allMeshesHaveUV": true,
+    "faceAnchor": [
+      0,
+      0.3,
+      1.257
+    ],
+    "posterWebpBytes": 55398
+  },
+  "mattress_double": {
+    "bytes": 255040,
+    "meshes": 38,
+    "triangles": 9544,
+    "vertices": 6166,
+    "materials": 3,
+    "allMeshesHaveUV": true,
+    "faceAnchor": [
+      0,
+      0.3,
+      1.257
+    ],
+    "posterWebpBytes": 46878
+  },
+  "chair": {
+    "bytes": 111400,
+    "meshes": 12,
+    "triangles": 3916,
+    "vertices": 2630,
+    "materials": 3,
+    "allMeshesHaveUV": true,
+    "faceAnchor": [
+      0,
+      1.37,
+      -0.28
+    ],
+    "posterWebpBytes": 66362
+  },
+  "chair_seat": {
+    "bytes": 65732,
+    "meshes": 7,
+    "triangles": 2184,
+    "vertices": 1539,
+    "materials": 3,
+    "allMeshesHaveUV": true,
+    "faceAnchor": [
+      0,
+      0.86,
+      -0.28
+    ],
+    "posterWebpBytes": 68962
+  },
+  "chair_back": {
+    "bytes": 112876,
+    "meshes": 12,
+    "triangles": 3916,
+    "vertices": 2630,
+    "materials": 3,
+    "allMeshesHaveUV": true,
+    "faceAnchor": [
+      0,
+      1.37,
+      -0.28
+    ],
+    "posterWebpBytes": 72398
+  },
+  "other": {
+    "bytes": 39784,
+    "meshes": 3,
+    "triangles": 1432,
+    "vertices": 859,
+    "materials": 3,
+    "allMeshesHaveUV": true,
+    "faceAnchor": [
+      0,
+      0.39,
+      0.557
+    ],
+    "posterWebpBytes": 47360
+  }
+}
