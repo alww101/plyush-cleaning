@@ -24,9 +24,13 @@ async function open():Promise<Database>{
    const db:Database={query:async<T>(s:string,p?:unknown[])=>({rows:(await pool.query(s,p)).rows as T[]}),tx:async(fn)=>{const c=await pool.connect();try{await c.query('BEGIN');const v=await fn(c);await c.query('COMMIT');return v;}catch(e){await c.query('ROLLBACK');throw e;}finally{c.release();}}};
    return db;
  }
- if(process.env.LOCAL_DATABASE!=='1')throw new Error('DATABASE_URL is required. For local preview run npm run setup.');
+ // Vercel preview/demo deployments do not have a database by default. Keep the
+ // demo usable with an ephemeral PGlite store; production can still use
+ // DATABASE_URL for durable orders.
  const dir=path.resolve(process.env.DATA_DIR||'data');await fs.mkdir(dir,{recursive:true});
  const pg=new PGlite(path.join(dir,'postgres'));await pg.waitReady;
+ for(const statement of schema.split(';').filter(s=>s.trim())) await pg.query(statement);
+ await pg.query('INSERT INTO settings(id,value) VALUES(1,$1::jsonb) ON CONFLICT(id) DO NOTHING',[JSON.stringify(defaults)]);
  return {query:(s,p)=>pg.query(s,p),tx:(fn)=>pg.transaction(tx=>fn(tx as Queryable))};
 }
 export const db=()=>g.plyushDB??=(open());
