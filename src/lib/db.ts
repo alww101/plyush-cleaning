@@ -27,7 +27,7 @@ async function open():Promise<Database>{
  // Vercel preview/demo deployments do not have a database by default. Keep the
  // demo usable with an ephemeral PGlite store; production can still use
  // DATABASE_URL for durable orders.
- const dir=path.resolve(process.env.DATA_DIR||'data');await fs.mkdir(dir,{recursive:true});
+ const dir=path.resolve(process.env.DATA_DIR||(process.env.VERCEL?'/tmp/plyush-data':'data'));await fs.mkdir(dir,{recursive:true});
  const pg=new PGlite(path.join(dir,'postgres'));await pg.waitReady;
  for(const statement of schema.split(';').filter(s=>s.trim())) await pg.query(statement);
  await pg.query('INSERT INTO settings(id,value) VALUES(1,$1::jsonb) ON CONFLICT(id) DO NOTHING',[JSON.stringify(defaults)]);
